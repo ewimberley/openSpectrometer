@@ -5,7 +5,7 @@ An open source spectrometer using an Arduino and off-the-shelf parts.
 * 1x Tungsten lamp and mount
 * 1x Deuterium arc lamp and mount
 * 1x UV focusing lens and mount
-* 1x Cuvtte Houlder
+* 1x Cuvtte Holder
 * 1x UV diffraction grating and mount
 * 8x 200mm Makerbeam
 * 4x 50mm Makerbeam
