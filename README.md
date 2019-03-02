@@ -1,7 +1,7 @@
 # openSpectrometer
 An open source spectrometer using an Arduino and off-the-shelf parts.
 
-##Bill of Materials
+## Bill of Materials
 * 1x Tungsten lamp and mount
 * 1x Deuterium arc lamp and mount
 * 1x UV focusing lens and mount
