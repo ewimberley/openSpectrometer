@@ -15,6 +15,8 @@
 
 //XXX use external interrupts for hall sensor changes/counting
 
+//TODO use python serial to do computer to arudino I/O
+
 int mode = -1;
 
 void setup() {
