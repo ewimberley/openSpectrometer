@@ -8,6 +8,13 @@
 
 #define GEAR_REDUCTION_RATIO 600
 
+//XXX use fast write mode for motor control
+//#define CLR(x,y) (x&=(~(1<<y)))
+//#define SET(x,y) (x|=(1<<y))
+//SET(PORTB, 0);
+
+//XXX use external interrupts for hall sensor changes/counting
+
 int mode = -1;
 
 void setup() {
