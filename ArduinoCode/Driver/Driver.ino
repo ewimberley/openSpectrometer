@@ -55,7 +55,7 @@ void loop() {
     //turn clockwise until out of hall sensor range
     int mainHall = analogRead(COARSE_HALL_SENSOR);
     if(mainHall < 20){
-      turnMotor(MOTOR_CLOCKWISE, 1);
+      turnMotorTenthDegrees(MOTOR_CLOCKWISE, 1);
     } else {
       mode = 1;
     }
@@ -64,7 +64,7 @@ void loop() {
     int mainHall = analogRead(COARSE_HALL_SENSOR);
     //Serial.println(mainHall);
     if(mainHall > 20){
-      turnMotor(MOTOR_COUNTERCLOCKWISE, 1);
+      turnMotorTenthDegrees(MOTOR_COUNTERCLOCKWISE, 1);
     } else {
       mode = 2;
       numTurns = 0;
@@ -74,7 +74,7 @@ void loop() {
     int visible = analogRead(VISIBLE_LIGHT_SENSOR);
     int uv = analogRead(UV_LIGHT_SENSOR);
     Serial.println(String(numTurns) + ": " + String(visible));
-    turnMotor(MOTOR_CLOCKWISE, 1); 
+    turnMotorTenthDegrees(MOTOR_CLOCKWISE, 1); 
     if(numTurns == 180){
       delay(3000);
       mode = -1;
@@ -83,7 +83,19 @@ void loop() {
   }
 }
 
-void turnMotor(int direction, int degrees){
+void turnMotorTenthDegrees(int direction, int tenthDegrees){
+  //TODO count previous overrun ticks towards next turn if same direction?
+  ticks = 0;
+  long requiredTicks = (long)tenthDegrees * TICKS_PER_DEGREE_TENTH;
+  //Serial.println(requiredTicks);
+  while(ticks < requiredTicks){
+    SET(PORTD, direction);
+    //Serial.println(ticks);
+  }
+  CLR(PORTD, direction);
+}
+
+/*void turnMotorDegrees(int direction, int degrees){
   ticks = 0;
   long requiredTicks = (long)degrees * TICKS_PER_DEGREE;
   //Serial.println(requiredTicks);
@@ -92,4 +104,4 @@ void turnMotor(int direction, int degrees){
     //Serial.println(ticks);
   }
   CLR(PORTD, direction);
-}
+}*/
