@@ -75,7 +75,7 @@ void loop() {
     int uv = analogRead(UV_LIGHT_SENSOR);
     Serial.println(String(numTurns) + ": " + String(visible));
     turnMotorTenthDegrees(MOTOR_CLOCKWISE, 1); 
-    if(numTurns == 180){
+    if(numTurns == 1800){
       delay(3000);
       mode = -1;
     }
