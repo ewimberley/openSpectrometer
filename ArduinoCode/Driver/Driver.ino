@@ -6,13 +6,14 @@
 #define MOTOR_CLOCKWISE 5
 #define FINE_HALL_SENSOR 2
 
+//Leave these here for documentation for now
 //#define GEAR_REDUCTION_RATIO 600
 //#define TICKS_PER_FAST_ROATION 12
 //#define DEGREES_PER_FAST_ROTATION 360
 //#define MINUTES_PER_DEGREE 60
 
 //how many hall sensor ticks are required to turn main motor 1 minute (1/60th of a degree)
-#define TICKS_PER_MINUTE 120
+#define TICKS_PER_DEGREE_TENTH 2
 #define TICKS_PER_DEGREE 19 //theoretical 20
 
 //fast write mode for motor control
@@ -73,8 +74,11 @@ void loop() {
     int visible = analogRead(VISIBLE_LIGHT_SENSOR);
     int uv = analogRead(UV_LIGHT_SENSOR);
     Serial.println(String(numTurns) + ": " + String(visible));
-    turnMotor(MOTOR_CLOCKWISE, 90); 
-    delay(1000);
+    turnMotor(MOTOR_CLOCKWISE, 1); 
+    if(numTurns == 180){
+      delay(3000);
+      mode = -1;
+    }
     numTurns = numTurns + 1;
   }
 }
