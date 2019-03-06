@@ -6,7 +6,14 @@
 #define MOTOR_CLOCKWISE 5
 #define FINE_HALL_SENSOR 2
 
-#define GEAR_REDUCTION_RATIO 600
+//#define GEAR_REDUCTION_RATIO 600
+//#define TICKS_PER_FAST_ROATION 12
+//#define DEGREES_PER_FAST_ROTATION 360
+//#define MINUTES_PER_DEGREE 60
+
+//how many hall sensor ticks are required to turn main motor 1 minute (1/60th of a degree)
+#define TICKS_PER_MINUTE 120
+#define TICKS_PER_DEGREE 19 //theoretical 20
 
 //fast write mode for motor control
 #define CLR(x,y) (x&=(~(1<<y)))
@@ -15,11 +22,11 @@
 //TODO use python serial to do computer to arudino I/O
 
 int mode = -1;
-volatile int clicks = 0;
+volatile long ticks = 0;
 int numTurns = 0;
 
 void fineHallChange(){
-    clicks = clicks + 1;
+    ticks = ticks + 1;
 }
 
 void setup() {
@@ -47,7 +54,7 @@ void loop() {
     //turn clockwise until out of hall sensor range
     int mainHall = analogRead(COARSE_HALL_SENSOR);
     if(mainHall < 20){
-      turnMotor(MOTOR_CLOCKWISE, 10);
+      turnMotor(MOTOR_CLOCKWISE, 1);
     } else {
       mode = 1;
     }
@@ -56,7 +63,7 @@ void loop() {
     int mainHall = analogRead(COARSE_HALL_SENSOR);
     //Serial.println(mainHall);
     if(mainHall > 20){
-      turnMotor(MOTOR_COUNTERCLOCKWISE, 10);
+      turnMotor(MOTOR_COUNTERCLOCKWISE, 1);
     } else {
       mode = 2;
       numTurns = 0;
@@ -66,16 +73,19 @@ void loop() {
     int visible = analogRead(VISIBLE_LIGHT_SENSOR);
     int uv = analogRead(UV_LIGHT_SENSOR);
     Serial.println(String(numTurns) + ": " + String(visible));
-    turnMotor(MOTOR_CLOCKWISE, 1);
-    delay(100); 
+    turnMotor(MOTOR_CLOCKWISE, 90); 
+    delay(1000);
     numTurns = numTurns + 1;
   }
 }
 
-void turnMotor(int direction, int turnClicks){
-  clicks = 0;
-  while(clicks < turnClicks){
+void turnMotor(int direction, int degrees){
+  ticks = 0;
+  long requiredTicks = (long)degrees * TICKS_PER_DEGREE;
+  //Serial.println(requiredTicks);
+  while(ticks < requiredTicks){
     SET(PORTD, direction);
+    //Serial.println(ticks);
   }
   CLR(PORTD, direction);
 }
