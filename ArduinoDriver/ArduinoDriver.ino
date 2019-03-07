@@ -124,6 +124,7 @@ void turnMotorTenthDegrees(int direction, int tenthDegrees){
   ticks = 0;
   long requiredTicks = (long)tenthDegrees * TICKS_PER_DEGREE_TENTH;
   while(ticks < requiredTicks){
+    //TODO try analogWrite(direction, motorSpeed) instead?
     SET(PORTD, direction);
   }
   CLR(PORTD, direction);
