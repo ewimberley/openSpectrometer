@@ -33,7 +33,7 @@ volatile long ticks = 0;
 int numTurns = 0;
 
 void fineHallChange(){
-    ticks = ticks + 1;
+    ticks++;
     //TODO do these help with motor accuracy?
     //CLR(PORTD, MOTOR_CLOCKWISE);
     //CLR(PORTD, MOTOR_COUNTERCLOCKWISE);
