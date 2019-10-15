@@ -1,7 +1,7 @@
 # Open Spectrometer
 An open source UV/Vis spectrometer using an Arduino and off-the-shelf parts.
 
-<img src="BuildPictures/DiffractionGratingMotor2.jpg"  width="50%">
+<img src="BuildPictures/20190320_212338.jpg"  width="60%">
 
 ## Bill of Materials
 * 1x Tungsten lamp and mount
